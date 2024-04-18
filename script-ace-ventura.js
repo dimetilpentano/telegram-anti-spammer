@@ -1,9 +1,8 @@
 async function sendScript(scriptText){
     const lines = scriptText.split(/[\n\t]+/).map(line => line.trim()).filter(line => line);
-    let main = document.querySelector("#main");
+    let main = document.querySelector("#root");
     let textarea = main.querySelector(`div[contenteditable="true"]`);
-
-    if(!textarea) throw new Error("No tienes una conversación de WhatsApp abierta.")
+    if(!textarea) throw new Error("No tienes una conversación abierta.")
 
     for(const line of lines){
         console.log(line)
@@ -13,7 +12,7 @@ async function sendScript(scriptText){
         textarea.dispatchEvent(new Event('change', {bubbles: true}));
 
         setTimeout(() => {
-            (main.querySelector(`[data-testid="send"]`) || main.querySelector(`[data-icon="send"]`)).click();
+            (main.querySelector(`button[title="Send Message"]`) || main.querySelector(`"icon icon-send"`)).click();
         }, 100);
 
         if(lines.indexOf(line) !== lines.length - 1) await new Promise(resolve => setTimeout(resolve, 250));
@@ -21,6 +20,7 @@ async function sendScript(scriptText){
 
     return lines.length;
 }
+
 const content = `ACE VENTURA
 PET DETECTIVE
 
@@ -4608,4 +4608,4 @@ ROLL CREDITS
 THE END`
 
 sendScript(content)
-    .then(e => console.log(`Guión enviado ✅, ${e} mensajes enviados 🤓`)).catch(console.error)
+    .then(e => console.log(` Enviado ☄️, ${e} mensajes enviados 👉🏻💥💃🏻`)).catch(console.error)
